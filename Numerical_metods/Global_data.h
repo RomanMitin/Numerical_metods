@@ -22,13 +22,13 @@ struct step_info_t
 {
 	double h;
 	double x, v;
-	double v_check;
-	double S_astr;
-	double v_final;
+	double v_check = 0;
+	double S_astr = 0;
+	double v_final = 0;
 
 	double u = 0;
 	double abs_error = 0;
 
-	uint32_t count_step_grow;
-	uint32_t count_step_decrease;
+	uint32_t count_step_grow = 0;
+	uint32_t count_step_decrease = 0;
 };

@@ -29,6 +29,7 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 
 	double x = global_data.a;
 	double v = global_data.v0;
+	double v_tmp;
 
 	double v_check;
 
@@ -39,6 +40,13 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 	std::vector<step_info_t> step_info_vec;
 	step_info_vec.reserve(static_cast<size_t>((b - x) / (h + 0.003)));
 
+	step_info_t tmp_first_step;
+
+	tmp_first_step.h = h;
+	tmp_first_step.x = x;
+	tmp_first_step.v = v;
+
+	step_info_vec.emplace_back(tmp_first_step);
 
 	while (step_count <= max_step && x < b)
 	{
@@ -49,10 +57,10 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 		count_decrease_by_step = 0;
 
 		step_count++;
-		x = std::min(x + h, b);
 
-		v = metod_step(x, v, h, 1);
+		v_tmp = metod_step(x, v, h, 1);
 		v_check = metod_step(x, v, h / 2, 2);
+		v = v_tmp;
 
 		S = (v_check - v) / ((1ull << metod_rate) - 1);
 
@@ -61,29 +69,33 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 			h /= 2.0;
 			count_grow_by_step++;
 
-
-			v = metod_step(x, v, h, 1);
+			v_tmp = metod_step(x, v, h, 1);
 			v_check = metod_step(x, v, h / 2, 2);
+			v = v_tmp;
 
 			S = (v_check - v) / ((1ull << metod_rate) - 1);
 		}
 		double S_atr = S * (1ull << metod_rate);
 
+
 		step_info.h = h;
-		step_info.x = x;
 		step_info.v = v;
 		step_info.v_check = v_check;
 		step_info.S_astr = S_atr;
-
-		v = get_final_v(v, v_check, S_atr);
-
-		step_info.v_final = v;
 
 		if (abs(S) < control_local_error_down)
 		{
 			h *= 2;
 			count_decrease_by_step++;
 		}
+
+		x = std::min(x + h, b);
+		step_info.x = x;
+
+		v = get_final_v(v, v_check, S_atr);
+
+
+		step_info.v_final = v;
 
 		count_step_grow += count_grow_by_step;
 		count_step_decrease += count_decrease_by_step;
