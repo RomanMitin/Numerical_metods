@@ -3,67 +3,66 @@
 #include "input_and_output.h"
 #include "Runge_Kutta_method_3_order.h"
 
-void parce_input(int argc, char* argv[], Global_data_t& global_data)
+int parce_input(std::ifstream& in, Global_data_t& global_data)
 {
-	if (argc < 9)
+	int alg_num;
+
+	in >> alg_num;
+
+	in >> global_data.a >> global_data.b >> global_data.v0 >> global_data.start_step;
+
+	in >> global_data.max_steps >> global_data.e_gr;
+
+	if (in.eof())
 	{
-		std::cerr << "Not enoght arguments, argc must be greater that 8\n";
+		std::cerr << "Not enoght data in input file\n";
 		exit(1);
 	}
 
+	int control_option;
 
-	global_data.a = atof(argv[1]);
-	global_data.b = atof(argv[2]);
-	global_data.v0 = atof(argv[3]);
-	global_data.start_step = atof(argv[4]);
-	global_data.max_steps = atoll(argv[5]);
-	global_data.e_gr = atof(argv[6]);
+	in >> control_option;
 
-	switch (atoi(argv[8]))
+	switch (control_option)
 	{
 	case 1:
-		if (argc >= 9)
+		
+		if ((in >> global_data.control_local_error_up).eof())
 		{
-			global_data.control_local_error_up = atof(argv[9]);
-			if (argc >= 10)
-				global_data.control_local_error_down = atof(argv[10]);
-			else
-				global_data.control_local_error_down = global_data.control_local_error_up / (1ull << (metod_rangs[atoi(argv[7])] + 1));
+			std::cerr << "Not enoght data in input file, no control_local_error_up\n";
+			exit(3);
 		}
-		else
+
+		if ((in >> global_data.control_local_error_down).eof())
 		{
-			std::cerr << "Not enoght arguments, their is no argv[9]\n";
-			exit(4);
+			global_data.control_local_error_down = global_data.control_local_error_up / (1ull << (metod_rangs[alg_num] + 1));
 		}
+		
 
 		break;
 	case 2:
-		if (argc >= 9)
+		if ((in >> global_data.control_local_error_up).eof())
 		{
-			global_data.control_local_error_up = atof(argv[9]);
-		}
-		else
-		{
-			std::cerr << "Not enoght arguments, their is no argv[9]\n";
+			std::cerr << "Not enoght data in input file, no control_local_error_up\n";
 			exit(4);
 		}
 		break;
 	case 3:
 		break;
 	default:
-		std::cerr << "Invalid control option in argv[8]";
+		std::cerr << "Invalid control option";
 		exit(5);
 		break;
 	}
 
-
+	return alg_num;
 }
 
-std::vector<step_info_t> choose_metod_and_start(char* argv[], const Global_data_t& global_data)
+std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global_data_t& global_data)
 {
 	std::vector<step_info_t> res;
 
-	switch (atoi(argv[7]))
+	switch (algorinthm_num)
 	{
 	case 2:
 		std::cerr << "This metod does not supported now\n";
@@ -104,7 +103,7 @@ std::vector<step_info_t> choose_metod_and_start(char* argv[], const Global_data_
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-	out << "n\tx\tv\tv_check\tS_astr\tv_final\tu\tabs_error\tcount_step_decrease\tcount_step_grow\n";
+	out << "n\th\tx\tv\tv_check\tS_astr\tv_final\tu\tabs_error\tcount_step_decrease\tcount_step_grow\n";
 
 	for (int i = 0; i < res.size(); i++)
 	{
