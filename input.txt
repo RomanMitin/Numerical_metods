@@ -1,2 +1,5 @@
-3 0 1 0 0.001 1000 0.001 3 
+3 1 2 1 0.03 1000 0.001 3
 m a b v0 h  max_step e_gr c
+
+m - metod
+c - control local error option

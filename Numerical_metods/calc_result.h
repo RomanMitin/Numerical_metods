@@ -7,7 +7,8 @@
 
 double get_final_v(double v, double v_check, double S_astr)
 {
-	return v + S_astr;
+	return v;
+	//return v + S_astr;
 }
 
 template<double (*metod_step)(double, double, double, uint64_t), uint32_t metod_rate>
@@ -39,7 +40,7 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 	step_info_vec.reserve(static_cast<size_t>((b - x) / (h + 0.003)));
 
 
-	while (step_count <= max_step || x < b)
+	while (step_count <= max_step && x < b)
 	{
 		step_info_t step_info;
 

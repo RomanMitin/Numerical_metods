@@ -26,8 +26,8 @@ struct step_info_t
 	double S_astr;
 	double v_final;
 
-	double u;
-	double abs_error;
+	double u = 0;
+	double abs_error = 0;
 
 	uint32_t count_step_grow;
 	uint32_t count_step_decrease;

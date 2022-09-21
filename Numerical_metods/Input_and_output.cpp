@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "calc_result.h"
 #include "input_and_output.h"
 #include "Runge_Kutta_method_3_order.h"
@@ -103,7 +104,9 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-	out << "n\th\tx\tv\tv_check\tS_astr\tv_final\tu\tabs_error\tcount_step_decrease\tcount_step_grow\n";
+	out << std::setprecision(3);
+
+	out << "n\th\tx\tv\tv^\tS*\tv_fin\tu\terr\tmul_s\tdiv_s\n";
 
 	for (int i = 0; i < res.size(); i++)
 	{
