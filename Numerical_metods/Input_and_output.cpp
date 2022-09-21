@@ -104,24 +104,39 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-	out << std::setprecision(3);
+	int precision = 8;
+	int space_num = precision + 8;
+	out << std::setprecision(precision);
 
-	out << "n\th\tx\tv\tv^\tS*\tv_fin\tu\terr\tmul_s\tdiv_s\n";
+
+	//out << "n\t\th\t\tx\t\tv\t\tv^\t\tS*\t\tv_fin\t\tu\t\terr\t\tmul_s\t\tdiv_s\n";
+	out << "n" << std::setw(space_num);
+	out << "h" << std::setw(space_num);
+	out << "x" << std::setw(space_num);
+	out << "v" << std::setw(space_num);
+	out << "v^" << std::setw(space_num);
+	out << "S*" << std::setw(space_num);
+	out << "v_fin" << std::setw(space_num);
+	out << "u" << std::setw(space_num);
+	out << "err" << std::setw(space_num);
+	out << "mul_s" << std::setw(space_num);
+	out << "div_s" << std::setw(space_num);
+	out << '\n';
+
 
 	for (int i = 0; i < res.size(); i++)
 	{
-		out << i << '\t';
-		out << res[i].h << '\t';
-		out << res[i].x << '\t';
-		out << res[i].v << '\t';
-		out << res[i].v_check << '\t';
-		out << res[i].S_astr << '\t';
-		out << res[i].v_final << '\t';
-		out << res[i].u << '\t';
-		out << res[i].abs_error << '\t';
-		out << res[i].count_step_decrease << '\t';
-		out << res[i].count_step_grow << '\t';
+		out << i << std::setw(space_num);
+		out << res[i].h << std::setw(space_num);
+		out << res[i].x << std::setw(space_num);
+		out << res[i].v << std::setw(space_num);
+		out << res[i].v_check << std::setw(space_num);
+		out << res[i].S_astr << std::setw(space_num);
+		out << res[i].v_final << std::setw(space_num);
+		out << res[i].u << std::setw(space_num);
+		out << res[i].abs_error << std::setw(space_num);
+		out << res[i].count_step_decrease << std::setw(space_num);
+		out << res[i].count_step_grow << '\n';
 
-		out << '\n';
 	}
 }
