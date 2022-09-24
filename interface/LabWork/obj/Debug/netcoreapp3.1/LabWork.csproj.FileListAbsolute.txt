@@ -1,0 +1,16 @@
+C:\Users\Daniil\source\repos\LabWork\LabWork\bin\Debug\netcoreapp3.1\LabWork.exe
+C:\Users\Daniil\source\repos\LabWork\LabWork\bin\Debug\netcoreapp3.1\LabWork.deps.json
+C:\Users\Daniil\source\repos\LabWork\LabWork\bin\Debug\netcoreapp3.1\LabWork.runtimeconfig.json
+C:\Users\Daniil\source\repos\LabWork\LabWork\bin\Debug\netcoreapp3.1\LabWork.runtimeconfig.dev.json
+C:\Users\Daniil\source\repos\LabWork\LabWork\bin\Debug\netcoreapp3.1\LabWork.dll
+C:\Users\Daniil\source\repos\LabWork\LabWork\bin\Debug\netcoreapp3.1\LabWork.pdb
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.csproj.AssemblyReference.cache
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.csproj.GenerateResource.cache
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.AssemblyInfoInputs.cache
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.AssemblyInfo.cs
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.csproj.CoreCompileInputs.cache
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.dll
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.pdb
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.genruntimeconfig.cache
+C:\Users\Daniil\source\repos\LabWork\LabWork\obj\Debug\netcoreapp3.1\LabWork.Form1.resources
