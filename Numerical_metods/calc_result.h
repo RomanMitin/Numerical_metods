@@ -5,6 +5,8 @@
 
 #include "Global_data.h"
 
+extern bool has_test_func;
+
 double get_final_v(double v, double v_check, double S_astr);
 
 void update_ref(Reference_t& ref, double E, double S, double h, double x);
@@ -87,9 +89,12 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 		}
 		double S_atr = S * (1ull << metod_rate);
 
+		if (has_test_func)
+			u = test_func(x);
 
 		step_info.h = h;
 		step_info.v = v;
+		step_info.u = u;
 		step_info.v_check = v_check;
 		step_info.S_astr = S_atr;
 
@@ -126,7 +131,6 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 
 	ref.count_step_grow = count_step_grow;
 	ref.count_step_decrease = count_step_decrease;
-
 
 
 	return step_info_vec;

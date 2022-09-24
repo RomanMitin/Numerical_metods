@@ -3,7 +3,10 @@
 #include <limits>
 #include <utility>
 
+double test_func(double x);
 double func1(double x, double v);
+double func2(double x, double v);
+double func3(double x, double v);
 
 
 struct Global_data_t

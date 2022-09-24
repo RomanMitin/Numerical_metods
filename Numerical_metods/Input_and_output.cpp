@@ -6,6 +6,7 @@
 #include "Runge_Kutta_method_3_order.h"
 
 std::function<double(double, double)> func;
+bool has_test_func;
 
 int parce_input(std::ifstream& in, Global_data_t& global_data)
 {
@@ -29,10 +30,15 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 	switch (func_num)
 	{
 	case 1:
+		has_test_func = true;
 		func = func1;
 		break;
 	case 2:
+		func = func2;
+		break;
 	case 3:
+		func = func3;
+		break;
 	default:
 		std::cerr << "Wrong func number\n";
 		exit(8);
