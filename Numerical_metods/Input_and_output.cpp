@@ -128,7 +128,7 @@ void print_refernce(std::ostream& out, Reference_t& ref)
 {
 	out << std::setprecision(precision);
 
-	out << "------------ REFERNCE ---------------\n";
+	out << "------------ REFERNCE ---------------\n\n";
 
 	out << ref.x0 << '\t' << ref.u0 << '\n';
 	out << ref.b << '\t' << ref.e_gr << '\n';
@@ -150,7 +150,7 @@ void print_refernce(std::ostream& out, Reference_t& ref)
 	out << ref.h_max.first << '\t' << ref.h_max.second << '\n';
 	out << ref.h_min.first << '\t' << ref.h_min.second << '\n';
 
-	out << '\n' << "------------ END_REFERNCE ---------------\n";
+	out << '\n' << "------------ END_REFERNCE ---------------\n\n";
 }
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
