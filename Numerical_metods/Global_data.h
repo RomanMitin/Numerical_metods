@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <limits>
 
-double func(double x, double v);
+double func1(double x, double v);
 
 
 struct Global_data_t

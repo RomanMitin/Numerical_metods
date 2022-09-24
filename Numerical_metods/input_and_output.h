@@ -6,7 +6,7 @@
 
 
 // 
-// algorithm_number a b v0 start_step max_step e_gr control_option (control_local_error_up) (control_local_error_down)
+// algorithm_number a b v0 start_step max_step e_gr func_number control_option (control_local_error_up) (control_local_error_down)
 //
 // swith(argv[8])
 // case 1: up and down control

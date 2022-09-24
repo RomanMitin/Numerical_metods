@@ -1,8 +1,11 @@
 #include <iostream>
 #include <iomanip>
+#include <functional>
 #include "calc_result.h"
 #include "input_and_output.h"
 #include "Runge_Kutta_method_3_order.h"
+
+std::function<double(double, double)> func;
 
 int parce_input(std::ifstream& in, Global_data_t& global_data)
 {
@@ -18,6 +21,22 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 	{
 		std::cerr << "Not enoght data in input file\n";
 		exit(1);
+	}
+
+	int func_num;
+	in >> func_num;
+
+	switch (func_num)
+	{
+	case 1:
+		func = func1;
+		break;
+	case 2:
+	case 3:
+	default:
+		std::cerr << "Wrong func number\n";
+		exit(8);
+		break;
 	}
 
 	int control_option;
@@ -55,6 +74,8 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 		exit(5);
 		break;
 	}
+	
+	auto l = [](int n) { return 0; };
 
 	return alg_num;
 }
@@ -104,7 +125,7 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-	int precision = 8;
+	int precision = 6;
 	int space_num = precision + 8;
 	out << std::setprecision(precision);
 

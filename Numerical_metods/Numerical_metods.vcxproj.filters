@@ -29,9 +29,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Runge_Kutta_methods_3_order.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="func.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input_and_output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Runge_Kutta_methods_3_order.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

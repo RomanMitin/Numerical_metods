@@ -1,4 +1,9 @@
 #include "Runge_Kutta_method_3_order.h"
+#include <functional>
+
+
+// define it in input
+extern std::function<double(double, double)> func;
 
 double Runge_Kutta_methods_3_order_step(double x0, double v0, double h, uint64_t num_step)
 {
