@@ -20,6 +20,8 @@ constexpr uint32_t metod_rangs[] = { 0, 1, 1, 2, 2 ,3, 3, 4 ,4 };
 
 int parce_input(std::ifstream& in, Global_data_t& global_data);
 
-std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global_data_t& global_data);
+std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global_data_t& global_data, Reference_t&);
+
+void print_refernce(std::ostream&,Reference_t& ref);
 
 void output_result(std::ostream&, std::vector<step_info_t>);

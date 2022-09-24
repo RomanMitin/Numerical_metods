@@ -80,7 +80,7 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 	return alg_num;
 }
 
-std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global_data_t& global_data)
+std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global_data_t& global_data, Reference_t& ref)
 {
 	std::vector<step_info_t> res;
 
@@ -91,7 +91,7 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 		exit(2);
 		break;
 	case 3:
-		res = calc_result<Runge_Kutta_methods_3_order_step, metod_rangs[3]>(global_data);
+		res = calc_result<Runge_Kutta_methods_3_order_step, metod_rangs[3]>(global_data, ref);
 		break;
 	case 4:
 		std::cerr << "This metod does not supported now\n";
@@ -122,11 +122,41 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 	return res;
 }
 
+constexpr int precision = 6;
+
+void print_refernce(std::ostream& out, Reference_t& ref)
+{
+	out << std::setprecision(precision);
+
+	out << "------------ REFERNCE ---------------\n";
+
+	out << ref.x0 << '\t' << ref.u0 << '\n';
+	out << ref.b << '\t' << ref.e_gr << '\n';
+	out << ref.h0 << '\t' << ref.max_step << '\n';
+
+	out << ref.control_local_error_up << '\t' << ref.control_local_error_down << '\n';
+	out << ref.num_step << '\n';
+	out << ref.diff_b << '\n';
+
+	out << ref.x_end << '\t' << ref.v_end << '\n';
+
+	out << ref.E_max.first << '\t' << ref.E_max.second << '\n';
+	out << ref.S_max.first << '\t' << ref.S_max.second << '\n';
+	out << ref.S_min.first << '\t' << ref.S_min.second << '\n';
+
+	out << ref.count_step_decrease << '\t' << ref.count_step_grow << '\n';
+
+
+	out << ref.h_max.first << '\t' << ref.h_max.second << '\n';
+	out << ref.h_min.first << '\t' << ref.h_min.second << '\n';
+
+	out << '\n' << "------------ END_REFERNCE ---------------\n";
+}
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-	int precision = 6;
-	int space_num = precision + 8;
+	constexpr int space_num = precision + 8;
+
 	out << std::setprecision(precision);
 
 
@@ -158,6 +188,5 @@ void output_result(std::ostream& out, std::vector<step_info_t> res)
 		out << res[i].abs_error << std::setw(space_num);
 		out << res[i].count_step_decrease << std::setw(space_num);
 		out << res[i].count_step_grow << '\n';
-
 	}
 }

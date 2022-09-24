@@ -145,6 +145,7 @@
     <ClInclude Include="Runge_Kutta_method_3_order.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="calc_result.cpp" />
     <ClCompile Include="func.cpp" />
     <ClCompile Include="Input_and_output.cpp" />
     <ClCompile Include="main.cpp" />

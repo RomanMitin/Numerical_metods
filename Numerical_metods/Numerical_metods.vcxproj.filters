@@ -41,5 +41,8 @@
     <ClCompile Include="Runge_Kutta_methods_3_order.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="calc_result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

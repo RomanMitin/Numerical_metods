@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 	std::ifstream in_file(argv[1]);
 
 	Global_data_t global_data;
+	Reference_t ref;
 	int alg_num;
 
 	if (in_file.is_open())
@@ -31,8 +32,10 @@ int main(int argc, char* argv[])
 	in_file.close();
 
 
-	std::vector<step_info_t> res = choose_metod_and_start(alg_num, global_data);
+	std::vector<step_info_t> res = choose_metod_and_start(alg_num, global_data, ref);
 
+
+	print_refernce(std::cout, ref);
 	output_result(std::cout, res);
 
 	return 0;

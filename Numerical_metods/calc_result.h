@@ -5,14 +5,12 @@
 
 #include "Global_data.h"
 
-double get_final_v(double v, double v_check, double S_astr)
-{
-	return v;
-	//return v + S_astr;
-}
+double get_final_v(double v, double v_check, double S_astr);
+
+void update_ref(Reference_t& ref, double E, double S, double h, double x);
 
 template<double (*metod_step)(double, double, double, uint64_t), uint32_t metod_rate>
-std::vector<step_info_t> calc_result(const Global_data_t& global_data)
+std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference_t& ref)
 {
 	uint64_t step_count = 0;
 	uint32_t count_step_grow = 0;
@@ -29,7 +27,9 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 
 	double x = global_data.a;
 	double v = global_data.v0;
+	double u = 0;
 	double v_tmp;
+
 
 	double v_check;
 
@@ -37,12 +37,22 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 
 	double b = global_data.b;
 
+	ref.x0 = x;
+	ref.u0 = v;
+	ref.b = b;
+
+	ref.h0 = h;
+	ref.b = b;
+	ref.max_step = max_step;
+	ref.control_local_error_up = control_local_error_up;
+	ref.control_local_error_down = control_local_error_down;
+
+
 	std::vector<step_info_t> step_info_vec;
 	step_info_vec.reserve(static_cast<size_t>((b - x) / (h + 0.003)));
 
 	step_info_t tmp_first_step;
 
-	tmp_first_step.h = h;
 	tmp_first_step.x = x;
 	tmp_first_step.v = v;
 
@@ -83,6 +93,8 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 		step_info.v_check = v_check;
 		step_info.S_astr = S_atr;
 
+		update_ref(ref, v - u, S, h, x);
+
 		if (abs(S) < control_local_error_down)
 		{
 			h *= 2;
@@ -105,6 +117,17 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data)
 
 		step_info_vec.emplace_back(step_info);
 	}
+
+
+	ref.num_step = step_count;
+	ref.diff_b = b - x;
+	ref.x_end = x;
+	ref.v_end = v;
+
+	ref.count_step_grow = count_step_grow;
+	ref.count_step_decrease = count_step_decrease;
+
+
 
 	return step_info_vec;
 }
