@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <vector>
+#include <cmath>
 
 #include "Global_data.h"
 
@@ -30,6 +31,7 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 	double x = global_data.a;
 	double v = global_data.v0;
 	double u = 0;
+	double C = v / test_func(x, 1);
 	double v_tmp;
 
 
@@ -57,6 +59,7 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 
 	tmp_first_step.x = x;
 	tmp_first_step.v = v;
+	tmp_first_step.u = test_func(x, C);
 
 	step_info_vec.emplace_back(tmp_first_step);
 
@@ -64,6 +67,8 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 	{
 		step_info_t step_info;
 
+		if (x + h > b)
+			h = b - x;
 
 		count_grow_by_step = 0;
 		count_decrease_by_step = 0;
@@ -79,7 +84,8 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 		while ((abs(S) > control_local_error_up))
 		{
 			h /= 2.0;
-			count_grow_by_step++;
+			count_decrease_by_step++;
+			
 
 			v_tmp = metod_step(x, v, h, 1);
 			v_check = metod_step(x, v, h / 2, 2);
@@ -89,29 +95,32 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 		}
 		double S_atr = S * (1ull << metod_rate);
 
-		if (has_test_func)
-			u = test_func(x);
+		
 
 		step_info.h = h;
 		step_info.v = v;
-		step_info.u = u;
 		step_info.v_check = v_check;
 		step_info.S_astr = S_atr;
 
-		update_ref(ref, v - u, S, h, x);
 
 		if (abs(S) < control_local_error_down)
 		{
+			count_grow_by_step++;
 			h *= 2;
-			count_decrease_by_step++;
 		}
 
-		x = std::min(x + h, b);
+		x += h;
 		step_info.x = x;
+
+		if (has_test_func)
+			u = test_func(x, C);
+
+		step_info.u = u;
+		update_ref(ref, v - u, S, h, x);
 
 		v = get_final_v(v, v_check, S_atr);
 
-
+		step_info.abs_error = v - u;
 		step_info.v_final = v;
 
 		count_step_grow += count_grow_by_step;

@@ -1,21 +1,27 @@
 #include "Global_data.h"
+#include <cmath>
 
-double test_func(double x)
+double f(double x)
 {
-	return 0;
+	return (pow(x, 3) + 1) / (pow(x, 5) + 1);
 }
 
-double func1(double x, double v)
+double test_func(double x, double C)
 {
-	return v * v - 2 * x * x;
+	return C * exp(2 * x);
 }
 
-double func2(double x, double v)
+double func1(double x, double u)
 {
-	return v * v - 2 * x * x;
+	return 2 * u;
 }
 
-double func3(double x, double v)
+double func2(double x, double u)
 {
-	return v * v - 2 * x * x;
+	return f(x) * pow(u, 2) + u - pow(u, 3) * sin(10 * x);
+}
+
+double func3(double x, double u)
+{
+	return u * u - 2 * x * x;
 }
