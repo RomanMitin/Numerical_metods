@@ -1,0 +1,4 @@
+graph.exe n_method u_true
+(если установлен python лучше python graph.py n_method u_true)
+n_method - номер метода(пока доступен только 3) 
+u_true - 1 или True, если есть численое решение, если его нет любое другое значение
