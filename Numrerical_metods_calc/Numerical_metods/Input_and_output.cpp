@@ -112,8 +112,7 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 		exit(2);
 		break;
 	case 7:
-		std::cerr << "This metod does not supported now\n";
-		exit(2);
+		res = calc_result<Runge_Kutta_methods_4_order_step, metod_rangs[7]>(global_data, ref);
 		break;
 	case 8:
 		std::cerr << "This metod does not supported now\n";
