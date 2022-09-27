@@ -37,17 +37,21 @@ namespace LabWork
             this.textBox_b = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox_u0 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_h = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox_eps = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox_klp = new System.Windows.Forms.TextBox();
+            this.textBox_E = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox_Nmax = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.buttonSolve = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox_Emin = new System.Windows.Forms.TextBox();
+            this.textBox_info = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataTable_table)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +61,7 @@ namespace LabWork
             this.DataTable_table.Location = new System.Drawing.Point(12, 216);
             this.DataTable_table.Name = "DataTable_table";
             this.DataTable_table.RowHeadersWidth = 51;
-            this.DataTable_table.Size = new System.Drawing.Size(776, 222);
+            this.DataTable_table.Size = new System.Drawing.Size(876, 271);
             this.DataTable_table.TabIndex = 0;
             // 
             // label1
@@ -120,19 +124,10 @@ namespace LabWork
             this.textBox_u0.TabIndex = 10;
             this.textBox_u0.Text = "1";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(431, 15);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(50, 20);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "label6";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(242, 149);
+            this.label7.Location = new System.Drawing.Point(242, 182);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 20);
             this.label7.TabIndex = 14;
@@ -140,7 +135,7 @@ namespace LabWork
             // 
             // textBox_h
             // 
-            this.textBox_h.Location = new System.Drawing.Point(287, 146);
+            this.textBox_h.Location = new System.Drawing.Point(287, 179);
             this.textBox_h.Name = "textBox_h";
             this.textBox_h.Size = new System.Drawing.Size(125, 27);
             this.textBox_h.TabIndex = 13;
@@ -166,19 +161,19 @@ namespace LabWork
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(231, 116);
+            this.label9.Location = new System.Drawing.Point(242, 116);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 20);
+            this.label9.Size = new System.Drawing.Size(31, 20);
             this.label9.TabIndex = 18;
-            this.label9.Text = "КЛП =";
+            this.label9.Text = "E =";
             // 
-            // textBox_klp
+            // textBox_E
             // 
-            this.textBox_klp.Location = new System.Drawing.Point(287, 113);
-            this.textBox_klp.Name = "textBox_klp";
-            this.textBox_klp.Size = new System.Drawing.Size(125, 27);
-            this.textBox_klp.TabIndex = 17;
-            this.textBox_klp.Text = "0,001";
+            this.textBox_E.Location = new System.Drawing.Point(287, 113);
+            this.textBox_E.Name = "textBox_E";
+            this.textBox_E.Size = new System.Drawing.Size(125, 27);
+            this.textBox_E.TabIndex = 17;
+            this.textBox_E.Text = "0,001";
             // 
             // label10
             // 
@@ -220,22 +215,76 @@ namespace LabWork
             this.buttonSolve.UseVisualStyleBackColor = true;
             this.buttonSolve.Click += new System.EventHandler(this.buttonSolve_Click);
             // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "контр. погр. \"сверху\" и \"снизу\"",
+            "отказ от контр. погр. \"снизу\"",
+            "отказ от контр. \"снизу и сверху\""});
+            this.comboBox2.Location = new System.Drawing.Point(178, 7);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(234, 28);
+            this.comboBox2.TabIndex = 23;
+            this.comboBox2.Tag = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(225, 149);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 20);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Emin =";
+            // 
+            // textBox_Emin
+            // 
+            this.textBox_Emin.Location = new System.Drawing.Point(287, 146);
+            this.textBox_Emin.Name = "textBox_Emin";
+            this.textBox_Emin.Size = new System.Drawing.Size(97, 27);
+            this.textBox_Emin.TabIndex = 24;
+            this.textBox_Emin.Text = "0,001";
+            // 
+            // textBox_info
+            // 
+            this.textBox_info.Location = new System.Drawing.Point(428, 7);
+            this.textBox_info.Multiline = true;
+            this.textBox_info.Name = "textBox_info";
+            this.textBox_info.ReadOnly = true;
+            this.textBox_info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_info.Size = new System.Drawing.Size(460, 199);
+            this.textBox_info.TabIndex = 26;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(390, 152);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(18, 17);
+            this.checkBox1.TabIndex = 27;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(900, 499);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.textBox_info);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox_Emin);
+            this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.buttonSolve);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox_Nmax);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox_klp);
+            this.Controls.Add(this.textBox_E);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox_eps);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox_h);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox_u0);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox_b);
@@ -245,8 +294,10 @@ namespace LabWork
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DataTable_table);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Лабораторная работа 4 команды";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResizeBegin += new System.EventHandler(this.Form1_ResizeBegin);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.DataTable_table)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -263,17 +314,21 @@ namespace LabWork
         private System.Windows.Forms.TextBox textBox_b;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox_u0;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox_h;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox_eps;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox_klp;
+        private System.Windows.Forms.TextBox textBox_E;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox_Nmax;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button buttonSolve;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox_Emin;
+        private System.Windows.Forms.TextBox textBox_info;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
