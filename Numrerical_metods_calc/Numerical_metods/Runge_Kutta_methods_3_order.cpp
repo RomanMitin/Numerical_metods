@@ -5,6 +5,21 @@
 // define it in input
 extern std::function<double(double, double)> func;
 
+double euler_metod_2_order(double x0, double v0, double h, uint64_t num_step)
+{
+	double x = x0;
+	double v = v0;
+
+	for (uint64_t i = 0; i < num_step; i++)
+	{
+		v = v + h * func(x, v);
+
+		x += h;
+	}
+
+	return v;
+}
+
 double Runge_Kutta_methods_3_order_step(double x0, double v0, double h, uint64_t num_step)
 {
 	double x = x0;

@@ -93,8 +93,7 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 	switch (algorinthm_num)
 	{
 	case 2:
-		std::cerr << "This metod does not supported now\n";
-		exit(2);
+		res = calc_result<euler_metod_2_order, metod_rangs[2]>(global_data, ref);
 		break;
 	case 3:
 		res = calc_result<Runge_Kutta_methods_3_order_step, metod_rangs[3]>(global_data, ref);

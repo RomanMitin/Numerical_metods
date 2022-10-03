@@ -59,7 +59,9 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 
 	tmp_first_step.x = x;
 	tmp_first_step.v = v;
-	tmp_first_step.u = test_func(x, C);
+
+	if(has_test_func)
+		tmp_first_step.u = test_func(x, C);
 
 	step_info_vec.emplace_back(tmp_first_step);
 
@@ -113,14 +115,17 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 		step_info.x = x;
 
 		if (has_test_func)
+		{
 			u = test_func(x, C);
+			step_info.u = u;
+		}
 
-		step_info.u = u;
 		update_ref(ref, v - u, S, h, x);
 
 		v = get_final_v(v, v_check, S_atr);
 
-		step_info.abs_error = v - u;
+		if (has_test_func)
+			step_info.abs_error = v - u;
 		step_info.v_final = v;
 
 		count_step_grow += count_grow_by_step;
