@@ -177,7 +177,7 @@ void output_result(std::ostream& out, std::vector<step_info_t> res)
 	out << "mul_s" << std::setw(space_num);
 	out << "div_s" << std::setw(space_num);
 	out << '\n';
-
+	
 
 	for (int i = 0; i < res.size(); i++)
 	{
@@ -190,7 +190,7 @@ void output_result(std::ostream& out, std::vector<step_info_t> res)
 		out << res[i].v_final << std::setw(space_num);
 		out << res[i].u << std::setw(space_num);
 		out << res[i].abs_error << std::setw(space_num);
-		out << res[i].count_step_decrease << std::setw(space_num);
-		out << res[i].count_step_grow << '\n';
+		out << res[i].count_step_grow << std::setw(space_num);
+		out << res[i].count_step_decrease << '\n';
 	}
 }
