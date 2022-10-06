@@ -111,8 +111,8 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 			h *= 2;
 		}
 
-		x += h;
 		step_info.x = x;
+		x += h;
 
 		if (has_test_func)
 		{

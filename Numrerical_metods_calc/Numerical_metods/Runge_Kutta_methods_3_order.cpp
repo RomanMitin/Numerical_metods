@@ -54,7 +54,7 @@ double Runge_Kutta_methods_4_order_step(double x0, double v0, double h, uint64_t
 		k3 = func(x + h / 2, v + h / 2 * k2);
 		k4 = func(x + h, v + h * k3);
 
-		v = v + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4);
+		v = v + (k1 + 2 * k2 + 2 * k3 + k4) * h / 6;
 
 		x += h;
 	}
