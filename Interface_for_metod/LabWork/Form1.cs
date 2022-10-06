@@ -70,14 +70,15 @@ namespace LabWork
 
         private void buttonSolve_Click(object sender, EventArgs e)
         {
-            double a, b, u0, h0, eps, E, Emin;
-            a = b = u0 = h0 = eps = E = Emin = 0.0;
+            double a, b, u0, h0, eps, du, E, Emin;
+            a = b = u0 = h0 = eps = E = Emin = du = 0.0;
             int nmax = 0;
             bool flag = false;
             textBox_info.Text = "";
             if (!double.TryParse(textBox_a.Text, out a)) textBox_info.Text += "Некорректное значение a\n";
             else if (!double.TryParse(textBox_b.Text, out b)) textBox_info.Text += "Некорректное значение b\n";
             else if (!double.TryParse(textBox_eps.Text, out eps)) textBox_info.Text += "Некорректное значение Eгр\n";
+            else if (!double.TryParse(textBox_du.Text, out eps)) textBox_info.Text += "Некорректное значение du/dx\n";
             else if (!double.TryParse(textBox_u0.Text, out u0)) textBox_info.Text += "Некорректное значение u0\n";
             else if (!double.TryParse(textBox_h.Text, out h0)) textBox_info.Text += "Некорректное значение h0\n";
             else if ((!checkBox1.Checked) && (!double.TryParse(textBox_E.Text, out E))) textBox_info.Text += "Некорректное значение E\n";
@@ -142,7 +143,7 @@ namespace LabWork
 
                 Process process = new Process();
                 process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.Arguments = "/C " + command;
+                process.StartInfo.Arguments = "/C" + command;
                 process.Start();
                 process.WaitForExit();
 
@@ -217,25 +218,25 @@ namespace LabWork
                 }
 
                 //run graph.exe
-                if (!File.Exists(@".\Graph_for_method\graph.exe")) {
-                    MessageBox.Show(@"'.\Graph_for_method\graph.exe' not found");
+                if (!File.Exists(@".\Graph_for_method\graph.py")) {
+                    MessageBox.Show(@"'.\Graph_for_method\graph.py' not found");
                     return;
                 }
                 switch (comboBox1.SelectedIndex) {
                     case 0: {
-                            command = @".\Graph_for_method\graph.exe 3 1";
+                            command = @".\Graph_for_method\graph.py 3 1";
                             break;
-                        }
+                    }
                     default: {
-                            command = @".\Graph_for_method\graph.exe 3 0";
+                            command = @".\Graph_for_method\graph.py 3 0";
                             break;
                     }
                 }
 
                 process = new Process();
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.Arguments = "/C" + command;
+                //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.StartInfo.FileName = "python";
+                process.StartInfo.Arguments = "" + command;
                 process.Start();
             }
         }

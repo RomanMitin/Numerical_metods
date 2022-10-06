@@ -315,6 +315,7 @@ namespace LabWork
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DataTable_table);
+            this.MinimumSize = new System.Drawing.Size(918, 546);
             this.Name = "Form1";
             this.Text = "Лабораторная работа 4 команды";
             this.Load += new System.EventHandler(this.Form1_Load);
