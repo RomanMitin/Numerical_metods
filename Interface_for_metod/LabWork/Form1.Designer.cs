@@ -52,6 +52,8 @@ namespace LabWork
             this.textBox_Emin = new System.Windows.Forms.TextBox();
             this.textBox_info = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox_du = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataTable_table)).BeginInit();
             this.SuspendLayout();
             // 
@@ -178,7 +180,7 @@ namespace LabWork
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(22, 119);
+            this.label10.Location = new System.Drawing.Point(22, 149);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(66, 20);
             this.label10.TabIndex = 20;
@@ -186,7 +188,7 @@ namespace LabWork
             // 
             // textBox_Nmax
             // 
-            this.textBox_Nmax.Location = new System.Drawing.Point(91, 116);
+            this.textBox_Nmax.Location = new System.Drawing.Point(91, 146);
             this.textBox_Nmax.Name = "textBox_Nmax";
             this.textBox_Nmax.Size = new System.Drawing.Size(125, 27);
             this.textBox_Nmax.TabIndex = 19;
@@ -204,6 +206,7 @@ namespace LabWork
             this.comboBox1.Size = new System.Drawing.Size(167, 28);
             this.comboBox1.TabIndex = 21;
             this.comboBox1.Tag = "";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // buttonSolve
             // 
@@ -265,11 +268,30 @@ namespace LabWork
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 116);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(84, 20);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "du/dx(a) = ";
+            // 
+            // textBox_du
+            // 
+            this.textBox_du.Location = new System.Drawing.Point(91, 113);
+            this.textBox_du.Name = "textBox_du";
+            this.textBox_du.Size = new System.Drawing.Size(125, 27);
+            this.textBox_du.TabIndex = 28;
+            this.textBox_du.Text = "1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 499);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.textBox_du);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox_info);
             this.Controls.Add(this.label5);
@@ -293,6 +315,7 @@ namespace LabWork
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DataTable_table);
+            this.MinimumSize = new System.Drawing.Size(918, 546);
             this.Name = "Form1";
             this.Text = "Лабораторная работа 4 команды";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -329,6 +352,8 @@ namespace LabWork
         private System.Windows.Forms.TextBox textBox_Emin;
         private System.Windows.Forms.TextBox textBox_info;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox_du;
     }
 }
 
