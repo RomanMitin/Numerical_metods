@@ -8,11 +8,11 @@ if (len(argv) != 3 and len(argv) != 4):
     print("Incorrect launch")
     exit()
 
-if (not(os.path.exists("../tmp/result.txt"))):  
+if (not(os.path.exists("./tmp/result.txt"))):  
     print("The file does not exist")
     exit()
 
-with open("../tmp/result.txt") as res:
+with open("./tmp/result.txt") as res:
     all_result = [row.strip() for row in res]
 
 
