@@ -127,6 +127,12 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 			break;
 		}
 
+		if (h < 1e-14)
+		{
+			std::cerr << "H is less 1e-14\n\n";
+			break;
+		}
+
 		update_ref(ref, v - u, S, h, x);
 
 		v = get_final_v(v, v_check, S_atr);
