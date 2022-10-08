@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 #include "Global_data.h"
 
@@ -48,6 +49,7 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 	ref.h0 = h;
 	ref.b = b;
 	ref.max_step = max_step;
+	ref.e_gr = global_data.e_gr;
 	ref.control_local_error_up = control_local_error_up;
 	ref.control_local_error_down = control_local_error_down;
 
@@ -94,10 +96,9 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 			v = v_tmp;
 
 			S = (v_check - v) / ((1ull << metod_rate) - 1);
+
 		}
 		double S_atr = S * (1ull << metod_rate);
-
-		
 
 		step_info.h = h;
 		step_info.v = v;
@@ -118,6 +119,12 @@ std::vector<step_info_t> calc_result(const Global_data_t& global_data, Reference
 		{
 			u = test_func(x, C);
 			step_info.u = u;
+		}
+
+		if (abs(v) > 1e+30)
+		{
+			std::cerr << "v is more that 1e+30\n\n";
+			break;
 		}
 
 		update_ref(ref, v - u, S, h, x);

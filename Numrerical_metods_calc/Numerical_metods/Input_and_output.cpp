@@ -18,6 +18,12 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 
 	in >> global_data.max_steps >> global_data.e_gr;
 
+	if (global_data.start_step <= 0)
+	{
+		std::cerr << "Start step cant be less or equal zero\n";
+		exit(9);
+	}
+
 	if (in.eof())
 	{
 		std::cerr << "Not enoght data in input file\n";
@@ -53,17 +59,34 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 	{
 	case 1:
 		
-		if ((in >> global_data.control_local_error_up).eof())
+		if (in.eof())
 		{
 			std::cerr << "Not enoght data in input file, no control_local_error_up\n";
 			exit(3);
 		}
+		else
+			in >> global_data.control_local_error_up;
 
-		if ((in >> global_data.control_local_error_down).eof())
+		if (global_data.control_local_error_up <= 0.0)
+		{
+			std::cerr << "Control local error up cant be less or equal zero\n";
+			exit(7);
+		}
+
+		if (in.eof())
 		{
 			global_data.control_local_error_down = global_data.control_local_error_up / (1ull << (metod_rangs[alg_num] + 1));
 		}
+		else
+		{
+			in >> global_data.control_local_error_down;
+		}
 		
+		if (global_data.control_local_error_down <= 0.0)
+		{
+			std::cerr << "Control local error down cant be less or equal zero\n";
+			exit(8);
+		}
 
 		break;
 	case 2:
