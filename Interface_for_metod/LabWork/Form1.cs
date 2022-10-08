@@ -81,7 +81,7 @@ namespace LabWork
             else if (!double.TryParse(textBox_du.Text, out eps)) textBox_info.Text += "Некорректное значение du/dx\n";
             else if (!double.TryParse(textBox_u0.Text, out u0)) textBox_info.Text += "Некорректное значение u0\n";
             else if (!double.TryParse(textBox_h.Text, out h0)) textBox_info.Text += "Некорректное значение h0\n";
-            else if ((!checkBox1.Checked) && (!double.TryParse(textBox_E.Text, out E))) textBox_info.Text += "Некорректное значение E\n";
+            else if ((!double.TryParse(textBox_E.Text, out E)) & (!checkBox1.Checked)) textBox_info.Text += "Некорректное значение E\n";
             else if (!double.TryParse(textBox_Emin.Text, out Emin)) textBox_info.Text += "Некорректное значение Emin\n";
             else if (!int.TryParse(textBox_Nmax.Text, out nmax)) textBox_info.Text += "Некорректное значение Nmax\n";
             else {
@@ -106,7 +106,6 @@ namespace LabWork
                 path = new FileInfo(@"./tmp/input.txt");
                 FileStream input_txt = path.Open(FileMode.Create);
                 int m = 3; //method
-                int c = 1; //local error options
                 string options = "";
 
                 //скорректировать под вызов 3 функции
@@ -122,8 +121,13 @@ namespace LabWork
                 switch (comboBox2.SelectedIndex + 1) {
                     case 1:
                         options += E + " ";
-                        if (!checkBox1.Checked) {
+                        if (!checkBox1.Checked)
+                        {
                             options += Emin + " ";
+                        }
+                        else {
+                            double p = 4;
+                            options += (E / Math.Pow(2, p)) + " ";
                         }
                         break;
                     case 2:
@@ -167,9 +171,9 @@ namespace LabWork
                         textBox_info.Text += (info[i] + Environment.NewLine);
                     }*/
                     //set info
-                    textBox_info.Text += "№ варианта задания: " + " " + Environment.NewLine;
+                    textBox_info.Text += "№ варианта задания: 4" + Environment.NewLine;
                     textBox_info.Text += "Тип задачи: " + (comboBox1.SelectedItem.ToString()) + Environment.NewLine;
-                    textBox_info.Text += "Метод Рунге Кутта порядка p = 3:" + Environment.NewLine;
+                    textBox_info.Text += "Метод Рунге Кутта порядка p = 4:" + Environment.NewLine;
                     textBox_info.Text += "x0 = " + info[0] + "\t\tu0 = " + info[1] + Environment.NewLine;
                     textBox_info.Text += "b = " + info[2] + "\t\tEгр = " + info[3] + Environment.NewLine;
                     textBox_info.Text += "h0 = " + info[4] + "\t\tNmax = " + info[5] + Environment.NewLine;
@@ -224,11 +228,11 @@ namespace LabWork
                 }
                 switch (comboBox1.SelectedIndex) {
                     case 0: {
-                            command = @".\Graph_for_method\graph.py 3 1";
+                            command = @".\Graph_for_method\graph.py 7 1";
                             break;
                     }
                     default: {
-                            command = @".\Graph_for_method\graph.py 3 0";
+                            command = @".\Graph_for_method\graph.py 7 0";
                             break;
                     }
                 }
