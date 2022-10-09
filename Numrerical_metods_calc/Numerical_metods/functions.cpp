@@ -25,3 +25,15 @@ double func3(double x, double u)
 {
 	return u * u - 2 * x * x;
 }
+
+double system1(double x, double u, double y)
+{
+	return y;
+}
+
+double a = 1, b = 1, c = 1;
+
+double system2(double x, double u, double y)
+{
+	return -a * y * abs(y) + b * y + c * u;
+}

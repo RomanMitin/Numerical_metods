@@ -1,18 +1,41 @@
 #include <iostream>
 #include <iomanip>
 #include <functional>
+#include <valarray>
 #include "calc_result.h"
 #include "input_and_output.h"
 #include "Runge_Kutta_method_3_order.h"
+#include "Runge_Kutta_system.h"
 
 std::function<double(double, double)> func;
+
+std::function<double(double, double, double)> func1_sys = system1;
+std::function<double(double, double, double)> func2_sys = system2;
+
 bool has_test_func;
+size_t dim;
+
+std::istream& operator>>(std::istream& in, std::valarray<double>& arr)
+{
+	arr.resize(dim);
+	for (int i = 0; i < dim; i++)
+	{
+		in >> arr[i];
+	}
+
+	return in;
+}
 
 int parce_input(std::ifstream& in, Global_data_t& global_data)
 {
 	int alg_num;
 
 	in >> alg_num;
+
+	if (alg_num == 8)
+		dim = 2;
+	else
+		dim = 1;
 
 	in >> global_data.a >> global_data.b >> global_data.v0 >> global_data.start_step;
 
@@ -137,8 +160,7 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 		res = calc_result<Runge_Kutta_methods_4_order_step, metod_rangs[7]>(global_data, ref);
 		break;
 	case 8:
-		std::cerr << "This metod does not supported now\n";
-		exit(2);
+		res = calc_result_system<2, Runge_Kutta_system_2_order, metod_rangs[8]>(global_data, ref);
 		break;
 	default:
 		std::cerr << "Invalid metod number\n";
@@ -149,7 +171,22 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 	return res;
 }
 
-constexpr int precision = 6;
+constexpr int precision = 5;
+constexpr int space_num = precision + 8;
+
+std::ostream& operator<<(std::ostream& out, const std::valarray<double>& arr)
+{
+	if (arr.size() == 0)
+		out << 0.0 << std::setw(space_num);
+	
+	for (int i = 0; i < arr.size(); i++)
+	{
+		out << arr[i] << std::setw(space_num);
+	}
+
+	return out;
+}
+
 
 void print_refernce(std::ostream& out, Reference_t& ref)
 {
@@ -182,19 +219,22 @@ void print_refernce(std::ostream& out, Reference_t& ref)
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-	constexpr int space_num = precision + 8;
 
 	out << std::setprecision(precision);
 
 
-	//out << "n\t\th\t\tx\t\tv\t\tv^\t\tS*\t\tv_fin\t\tu\t\terr\t\tmul_s\t\tdiv_s\n";
 	out << "n" << std::setw(space_num);
 	out << "h" << std::setw(space_num);
 	out << "x" << std::setw(space_num);
 	out << "v" << std::setw(space_num);
+	if (res[0].v.size() == 2)
+		out << "y" << std::setw(space_num);
 	out << "v^" << std::setw(space_num);
+	if (res[0].v.size() == 2)
+		out << "y^" << std::setw(space_num);
 	out << "S*" << std::setw(space_num);
-	out << "v_fin" << std::setw(space_num);
+	if (res[0].v.size() != 2)
+		out << "v_fin" << std::setw(space_num);
 	out << "u" << std::setw(space_num);
 	out << "err" << std::setw(space_num);
 	out << "mul_s" << std::setw(space_num);
@@ -209,8 +249,9 @@ void output_result(std::ostream& out, std::vector<step_info_t> res)
 		out << res[i].x << std::setw(space_num);
 		out << res[i].v << std::setw(space_num);
 		out << res[i].v_check << std::setw(space_num);
-		out << res[i].S_astr << std::setw(space_num);
-		out << res[i].v_final << std::setw(space_num);
+		out << abs(res[i].S_astr) << std::setw(space_num);
+		if (res[0].v.size() != 2)
+			out << res[i].v_final << std::setw(space_num);
 		out << res[i].u << std::setw(space_num);
 		out << res[i].abs_error << std::setw(space_num);
 		out << res[i].count_step_grow << std::setw(space_num);

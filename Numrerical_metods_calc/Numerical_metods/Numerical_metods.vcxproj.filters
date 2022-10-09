@@ -27,6 +27,9 @@
     <ClInclude Include="input_and_output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Runge_Kutta_system.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="functions.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="calc_result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Runge_Kutta_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

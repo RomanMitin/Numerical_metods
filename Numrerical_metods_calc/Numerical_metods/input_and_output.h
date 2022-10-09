@@ -16,7 +16,7 @@
 
 
 // from metodichka( page 48 )
-constexpr uint32_t metod_rangs[] = { 0, 1, 1, 2, 2 ,3, 3, 4 ,4 };
+constexpr uint32_t metod_rangs[] = { 0, 1, 1, 2, 2 ,3, 3, 4 ,4,  /*system */  2};
 
 int parce_input(std::ifstream& in, Global_data_t& global_data);
 

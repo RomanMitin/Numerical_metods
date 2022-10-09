@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7970bf70-516b-4afc-b7a2-9c1203140135}</ProjectGuid>
-    <RootNamespace>Numericalmetods</RootNamespace>
+    <ProjectGuid>{046cbfb5-f6b7-4f80-b1c3-961ac082b2f5}</ProjectGuid>
+    <RootNamespace>system</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -78,8 +78,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\tmp\</OutDir>
-    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -141,19 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="calc_result.h" />
-    <ClInclude Include="Global_data.h" />
-    <ClInclude Include="input_and_output.h" />
-    <ClInclude Include="Runge_Kutta_system.h" />
-    <ClInclude Include="Runge_Kutta_method_3_order.h" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="calc_result.cpp" />
-    <ClCompile Include="functions.cpp" />
-    <ClCompile Include="Input_and_output.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Runge_Kutta_methods_3_order.cpp" />
-    <ClCompile Include="Runge_Kutta_system.cpp" />
+    <ClInclude Include="Global_data.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
