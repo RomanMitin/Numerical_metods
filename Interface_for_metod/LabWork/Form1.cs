@@ -105,7 +105,7 @@ namespace LabWork
                 //create input.txt
                 path = new FileInfo(@"./tmp/input.txt");
                 FileStream input_txt = path.Open(FileMode.Create);
-                int m = 3; //method
+                int m = 7; //method
                 int c = 1; //local error options
                 string options = "";
 
@@ -224,11 +224,11 @@ namespace LabWork
                 }
                 switch (comboBox1.SelectedIndex) {
                     case 0: {
-                            command = @".\Graph_for_method\graph.py 3 1";
+                            command = @".\Graph_for_method\graph.py 7 1";
                             break;
                     }
                     default: {
-                            command = @".\Graph_for_method\graph.py 3 0";
+                            command = @".\Graph_for_method\graph.py 7 0";
                             break;
                     }
                 }

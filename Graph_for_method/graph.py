@@ -30,7 +30,7 @@ else:
 info = []
 for i in range(19):
     info.append(all_result[i].split())
-print(info)
+#print(info)
 
 result = []
 for i, row in enumerate(all_result):
@@ -59,7 +59,7 @@ for i, row in enumerate(result):
         print('!')
 
 if n_method == 2:
-    name = "euler_metod_2_order"
+    name = "euler_metod_1_order"
 if n_method == 3:
     name = "Runge_Kutta_methods_2_order_step"
 elif n_method == 7:
