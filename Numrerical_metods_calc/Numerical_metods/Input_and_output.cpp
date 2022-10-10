@@ -32,7 +32,7 @@ int parce_input(std::ifstream& in, Global_data_t& global_data)
 
 	in >> alg_num;
 
-	if (alg_num == 8)
+	if (alg_num >= 8)
 		dim = 2;
 	else
 		dim = 1;
@@ -161,6 +161,9 @@ std::vector<step_info_t> choose_metod_and_start(int algorinthm_num, const Global
 		break;
 	case 8:
 		res = calc_result_system<2, Runge_Kutta_system_2_order, metod_rangs[8]>(global_data, ref);
+		break;
+	case 9:
+		res = calc_result_system<2, Runge_Kutta_system_4_order, metod_rangs[9]>(global_data, ref);
 		break;
 	default:
 		std::cerr << "Invalid metod number\n";
