@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import os.path
 from sys import exit 
 from sys import argv #Для предачи n_method, u_true, system_
-#отдельно для основной задачи №2 с 4 графиками u_x, u'_x, u_u", S_x
 
 if (len(argv) != 3 and len(argv) != 4):
     print("Incorrect launch")
@@ -16,7 +15,8 @@ with open("./tmp/result.txt") as res:
     all_result = [row.strip() for row in res]
 
 
-n_method = int(argv[1]) #Нужно добавить в вывод имя или номер метода
+n_method = int(argv[1])
+
 if(argv[2] == '1' or argv[2] == 'True'): #Нужно передавать есть ли точное решение
     u_true = True
 else:
@@ -27,10 +27,11 @@ if(len(argv) == 4): #Нужно передавать система или не�
 else:
     system_ = False
 
-info = []
-for i in range(19):
-    info.append(all_result[i].split())
-print(info)
+##reference
+#info = []
+#for i in range(19):
+#    info.append(all_result[i].split())
+#print(info)
 
 result = []
 for i, row in enumerate(all_result):
@@ -46,24 +47,33 @@ if(u_true):
     E = []
 
 if(system_):
-    print('!')
+    y = []
 
 for i, row in enumerate(result):
     x.append(float(row[2]))
     v.append(float(row[3]))
-    S_.append(abs(float(row[5])))
-    if(u_true):
+
+    if(not(system_)):
+        S_.append(abs(float(row[5])))
+    else:
+        y.append(float(row[4]))
+        S_.append(abs(float(row[7])))
+    
+    if(u_true and not(system_)):
         u.append(float(row[7]))
         E.append(abs(float(row[8])))
-    if(system_):
-        print('!')
+    
 
 if n_method == 2:
-    name = "euler_metod_2_order"
-if n_method == 3:
-    name = "Runge_Kutta_methods_2_order_step"
+    name = "Euler method 1 order"
+elif n_method == 3:
+    name = "Runge Kutta methods 2 order step"
 elif n_method == 7:
-    name = "Runge_Kutta_methods_4_order_step"
+    name = "Runge Kutta methods 4 order step"
+elif n_method == 8:
+    name = "Runge Kutta methods 2 order step"
+    u_true = False
+    system_ = True
 else:
     name = "Unknown method"
 
@@ -77,12 +87,14 @@ if(not system_):
 
     x_v_u.plot(x, v, c = 'blue', label = 'Численное рещение')
     x_v_u.scatter(x, v, c = 'blue')
+    x_v_u.set_xlabel('x')
     if(u_true):
         x_v_u.plot(x, u, c = 'red', label = 'Точное рещение')
         x_v_u.scatter(x, u, c = 'red')
 
     x_S_E.plot(x, S_, c = 'orange', label = 'ОЛП')
     x_S_E.scatter(x, S_, c = 'orange')
+    x_S_E.set_xlabel('x')
     if(u_true):
         x_S_E.plot(x, E, c = 'yellow', label = 'Глобальная погрешность')
         x_S_E.scatter(x, E, c = 'yellow')
@@ -90,6 +102,32 @@ if(not system_):
     x_v_u.legend(fontsize = 12)
     x_S_E.legend(fontsize = 12)
 else:
-    print('!')
+    ((x_v, x_y), (v_y, x_S)) = fig.subplots(2, 2)
+    fig.suptitle(name, fontsize=16, fontweight='bold')
+
+    x_v.plot(x, v, c = 'blue', label = 'Численное рещение v1')
+    x_v.scatter(x, v, c = 'blue')
+    x_v.set_xlabel('x')
+    x_v.set_ylabel('v1')
+
+    x_y.plot(x, y, c = 'blue', label = 'Численное рещение v2')
+    x_y.scatter(x, y, c = 'blue')
+    x_y.set_xlabel('x')
+    x_y.set_ylabel('v2')
+
+    v_y.plot(v, y, c = 'purple', label = 'Фазовый портрет')
+    v_y.scatter(v, y, c = 'purple')
+    v_y.set_xlabel('v1')
+    v_y.set_ylabel('v2')
+
+    x_S.plot(x, S_, c = 'orange', label = 'ОЛП')
+    x_S.scatter(x, S_, c = 'orange')
+    x_S.set_xlabel('x')
+    x_S.set_ylabel('S')
+
+    x_v.legend(fontsize = 12)
+    x_y.legend(fontsize = 12)
+    v_y.legend(fontsize = 12)
+    x_S.legend(fontsize = 12)
 
 plt.show()
