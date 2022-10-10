@@ -73,18 +73,21 @@ namespace LabWork
             double a, b, u0, h0, eps, du, E, Emin;
             a = b = u0 = h0 = eps = E = Emin = du = 0.0;
             int nmax = 0;
+            int m = 7; //method
+            double p = 4; //order
             bool flag = false;
             textBox_info.Text = "";
             if (!double.TryParse(textBox_a.Text, out a)) textBox_info.Text += "Некорректное значение a\n";
             else if (!double.TryParse(textBox_b.Text, out b)) textBox_info.Text += "Некорректное значение b\n";
             else if (!double.TryParse(textBox_eps.Text, out eps)) textBox_info.Text += "Некорректное значение Eгр\n";
-            else if (!double.TryParse(textBox_du.Text, out eps)) textBox_info.Text += "Некорректное значение du/dx\n";
+            else if (!double.TryParse(textBox_du.Text, out du)) textBox_info.Text += "Некорректное значение du/dx\n";
             else if (!double.TryParse(textBox_u0.Text, out u0)) textBox_info.Text += "Некорректное значение u0\n";
             else if (!double.TryParse(textBox_h.Text, out h0)) textBox_info.Text += "Некорректное значение h0\n";
             else if ((!double.TryParse(textBox_E.Text, out E)) & (!checkBox1.Checked)) textBox_info.Text += "Некорректное значение E\n";
-            else if (!double.TryParse(textBox_Emin.Text, out Emin)) textBox_info.Text += "Некорректное значение Emin\n";
+            else if (!double.TryParse(textBox_Emin.Text, out Emin))  textBox_info.Text += "Некорректное значение Emin\n";
             else if (!int.TryParse(textBox_Nmax.Text, out nmax)) textBox_info.Text += "Некорректное значение Nmax\n";
-            else {
+            else
+            {
                 flag = true;
             }
             if (flag) {
@@ -105,36 +108,32 @@ namespace LabWork
                 //create input.txt
                 path = new FileInfo(@"./tmp/input.txt");
                 FileStream input_txt = path.Open(FileMode.Create);
-                int m = 7; //method
                 string options = "";
 
-                //скорректировать под вызов 3 функции
+                int func_num = comboBox1.SelectedIndex + 1;
+                int c = (comboBox2.SelectedIndex + 1);
                 options += m + " ";
                 options += a + " ";
                 options += b + " ";
                 options += u0 + " ";
+                if (func_num == 3) {
+                    options += du + " ";
+                }
                 options += h0 + " ";
                 options += nmax + " ";
                 options += eps + " ";
-                options += (comboBox1.SelectedIndex + 1) + " ";
-                options += (comboBox2.SelectedIndex + 1) + " ";
-                switch (comboBox2.SelectedIndex + 1) {
-                    case 1:
-                        options += E + " ";
-                        if (!checkBox1.Checked)
-                        {
-                            options += Emin + " ";
-                        }
-                        else {
-                            double p = 4;
-                            options += (E / Math.Pow(2, p)) + " ";
-                        }
-                        break;
-                    case 2:
-                        options += E + " ";
-                        break;
-                    case 3:
-                        break;
+                options += func_num + " ";
+                options += c + " ";
+                if (c == 1 || c == 2) {
+                    options += E + " ";
+                    if (!checkBox1.Checked)
+                    {
+                        options += Emin;
+                    }
+                    else
+                    {
+                        options += (E / Math.Pow(2, p));
+                    }
                 }
 
                 options = options.Replace(',', '.');
@@ -173,7 +172,7 @@ namespace LabWork
                     //set info
                     textBox_info.Text += "№ варианта задания: 4" + Environment.NewLine;
                     textBox_info.Text += "Тип задачи: " + (comboBox1.SelectedItem.ToString()) + Environment.NewLine;
-                    textBox_info.Text += "Метод Рунге Кутта порядка p = 4:" + Environment.NewLine;
+                    textBox_info.Text += "Метод Рунге Кутта порядка p = " + p + ":" + Environment.NewLine;
                     textBox_info.Text += "x0 = " + info[0] + "\t\tu0 = " + info[1] + Environment.NewLine;
                     textBox_info.Text += "b = " + info[2] + "\t\tEгр = " + info[3] + Environment.NewLine;
                     textBox_info.Text += "h0 = " + info[4] + "\t\tNmax = " + info[5] + Environment.NewLine;
@@ -215,11 +214,11 @@ namespace LabWork
                         values = string_erase(values, "");
                         table.Rows.Add(values);
                     }
-                    reader.Close();
                 }
                 catch (Exception exc){
                     MessageBox.Show("Incorrect result.txt");
                 }
+                reader.Close();
 
                 //run graph.exe
                 if (!File.Exists(@".\Graph_for_method\graph.py")) {
