@@ -20,6 +20,7 @@ namespace LabWork
             InitializeComponent();
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -73,26 +74,27 @@ namespace LabWork
             double a, b, u0, h0, eps, du, E, Emin;
             a = b = u0 = h0 = eps = E = Emin = du = 0.0;
             int nmax = 0;
-            bool flag = false;
+            int m1 = 7; //method for dim = 1
+            int m2 = 9; //method for dim = 2
+            double p = 0; //order
             textBox_info.Text = "";
             if (!double.TryParse(textBox_a.Text, out a)) textBox_info.Text += "Некорректное значение a\n";
             else if (!double.TryParse(textBox_b.Text, out b)) textBox_info.Text += "Некорректное значение b\n";
             else if (!double.TryParse(textBox_eps.Text, out eps)) textBox_info.Text += "Некорректное значение Eгр\n";
-            else if (!double.TryParse(textBox_du.Text, out eps)) textBox_info.Text += "Некорректное значение du/dx\n";
+            else if (!double.TryParse(textBox_du.Text, out du)) textBox_info.Text += "Некорректное значение du/dx\n";
             else if (!double.TryParse(textBox_u0.Text, out u0)) textBox_info.Text += "Некорректное значение u0\n";
             else if (!double.TryParse(textBox_h.Text, out h0)) textBox_info.Text += "Некорректное значение h0\n";
-            else if ((!checkBox1.Checked) && (!double.TryParse(textBox_E.Text, out E))) textBox_info.Text += "Некорректное значение E\n";
+            else if ((!double.TryParse(textBox_E.Text, out E)) & (!checkBox1.Checked)) textBox_info.Text += "Некорректное значение E\n";
             else if (!double.TryParse(textBox_Emin.Text, out Emin)) textBox_info.Text += "Некорректное значение Emin\n";
             else if (!int.TryParse(textBox_Nmax.Text, out nmax)) textBox_info.Text += "Некорректное значение Nmax\n";
-            else {
-                flag = true;
-            }
-            if (flag) {
+            else
+            {
                 //create path
                 DirectoryInfo dir = new DirectoryInfo("./tmp");
                 dir.Create();
 
-                if (!File.Exists(@"./tmp/Numerical_metods.exe")) {
+                if (!File.Exists(@"./tmp/Numerical_metods.exe"))
+                {
                     MessageBox.Show("'./tmp/Numerical_metods.exe' not found");
                     return;
                 }
@@ -105,45 +107,57 @@ namespace LabWork
                 //create input.txt
                 path = new FileInfo(@"./tmp/input.txt");
                 FileStream input_txt = path.Open(FileMode.Create);
-                int m = 3; //method
-                int c = 1; //local error options
                 string options = "";
 
-                //скорректировать под вызов 3 функции
-                options += m + " ";
+                int func_num = comboBox1.SelectedIndex + 1;
+                int c = (comboBox2.SelectedIndex + 1);
+                bool def = checkBox1.Checked;
+                int type_file = comboBox3.SelectedIndex;
+                switch (func_num)
+                {
+                    case 1:
+                    case 2:
+                        p = 4;
+                        options += m1 + " ";
+                        break;
+                    case 3:
+                        p = 3;
+                        options += m2 + " ";
+                        break;
+                }
                 options += a + " ";
                 options += b + " ";
                 options += u0 + " ";
+                switch (func_num)
+                {
+                    case 3:
+                        options += du + " ";
+                        break;
+                }
                 options += h0 + " ";
                 options += nmax + " ";
                 options += eps + " ";
-                options += (comboBox1.SelectedIndex + 1) + " ";
-                options += (comboBox2.SelectedIndex + 1) + " ";
-                switch (comboBox2.SelectedIndex + 1) {
+                options += func_num + " ";
+                options += c + " ";
+                switch (c) {
                     case 1:
-                        options += E + " ";
-                        if (!checkBox1.Checked) {
-                            options += Emin + " ";
-                        }
-                        break;
                     case 2:
                         options += E + " ";
-                        break;
-                    case 3:
+                        if (def) options += (E / Math.Pow(2, p + 1));
+                        else options += Emin;
                         break;
                 }
-
                 options = options.Replace(',', '.');
                 AddText(input_txt, options);
 
                 input_txt.Close();
-                
+
                 //run numerical_metods
                 string command = @".\tmp\Numerical_metods.exe .\tmp\input.txt > .\tmp\result.txt";
 
                 Process process = new Process();
                 process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.Arguments = "/C" + command;
+                process.StartInfo.Arguments = "/C " + command;
                 process.Start();
                 process.WaitForExit();
 
@@ -162,31 +176,37 @@ namespace LabWork
 
                     string[] info = refer.Split(' ', '\n', '\t');
                     info = string_erase(info, "");
-                    //textBox_info.Text += info.Length + Environment.NewLine;
-                    /*for (int i = 0; i < info.Length; ++i) {
-                        textBox_info.Text += (info[i] + Environment.NewLine);
-                    }*/
+
                     //set info
-                    textBox_info.Text += "№ варианта задания: " + " " + Environment.NewLine;
-                    textBox_info.Text += "Тип задачи: " + (comboBox1.SelectedItem.ToString()) + Environment.NewLine;
-                    textBox_info.Text += "Метод Рунге Кутта порядка p = 3:" + Environment.NewLine;
-                    textBox_info.Text += "x0 = " + info[0] + "\t\tu0 = " + info[1] + Environment.NewLine;
-                    textBox_info.Text += "b = " + info[2] + "\t\tEгр = " + info[3] + Environment.NewLine;
-                    textBox_info.Text += "h0 = " + info[4] + "\t\tNmax = " + info[5] + Environment.NewLine;
-                    textBox_info.Text += "E = " + info[6] + "\t\tEmin = " + info[7] + Environment.NewLine;
-                    textBox_info.Text += "Вариант контроля: " + comboBox2.SelectedItem.ToString() + Environment.NewLine;
-                    textBox_info.Text += Environment.NewLine;
-                    textBox_info.Text += "Результат расчета:" + Environment.NewLine;
-                    textBox_info.Text += "N = " + info[8] + Environment.NewLine;
-                    textBox_info.Text += "b - xN = " + info[9] + Environment.NewLine;
-                    textBox_info.Text += "xN = " + info[10] + "\t\tvNитог = " + info[11] + Environment.NewLine;
-                    textBox_info.Text += "max|En| = " + info[12] + "\t\tпри xn = " + info[13] + Environment.NewLine;
-                    textBox_info.Text += "max|S| = " + info[14] + "\t\tпри xn = " + info[15] + Environment.NewLine;
-                    textBox_info.Text += "min|S| = " + info[16] + "\t\tпри xn = " + info[17] + Environment.NewLine;
-                    textBox_info.Text += "Всего ум. шага = " + info[18] + Environment.NewLine;
-                    textBox_info.Text += "Всего ув. шага = " + info[19] + Environment.NewLine;
-                    textBox_info.Text += "max(hn) = " + info[20] + "\t\tпри xn+1 = " + info[21] + Environment.NewLine;
-                    textBox_info.Text += "min(hn) = " + info[22] + "\t\tпри xn+1 = " + info[23] + Environment.NewLine;
+                    switch (func_num) {
+                        case 1:
+                        case 2:
+                            textBox_info.Text += "№ варианта задания: 4" + Environment.NewLine;
+                            textBox_info.Text += "Тип задачи: " + (comboBox1.SelectedItem.ToString()) + Environment.NewLine;
+                            textBox_info.Text += "Метод Рунге Кутта порядка p = " + p + ":" + Environment.NewLine;
+                            textBox_info.Text += "x0 = " + info[0] + "\t\tu0 = " + info[1] + Environment.NewLine;
+                            textBox_info.Text += "b = " + info[2] + "\t\tEгр = " + info[3] + Environment.NewLine;
+                            textBox_info.Text += "h0 = " + info[4] + "\t\tNmax = " + info[5] + Environment.NewLine;
+                            textBox_info.Text += "E = " + info[6] + "\t\tEmin = " + info[7] + Environment.NewLine;
+                            textBox_info.Text += "Вариант контроля: " + comboBox2.SelectedItem.ToString() + Environment.NewLine;
+                            textBox_info.Text += Environment.NewLine;
+                            textBox_info.Text += "Результат расчета:" + Environment.NewLine;
+                            textBox_info.Text += "N = " + info[8] + Environment.NewLine;
+                            textBox_info.Text += "b - xN = " + info[9] + Environment.NewLine;
+                            textBox_info.Text += "xN = " + info[10] + "\t\tvNитог = " + info[11] + Environment.NewLine;
+                            textBox_info.Text += "max|En| = " + info[12] + "\t\tпри xn = " + info[13] + Environment.NewLine;
+                            textBox_info.Text += "max|S| = " + info[14] + "\t\tпри xn = " + info[15] + Environment.NewLine;
+                            textBox_info.Text += "min|S| = " + info[16] + "\t\tпри xn = " + info[17] + Environment.NewLine;
+                            textBox_info.Text += "Всего ум. шага = " + info[18] + Environment.NewLine;
+                            textBox_info.Text += "Всего ув. шага = " + info[19] + Environment.NewLine;
+                            textBox_info.Text += "max(hn) = " + info[20] + "\t\tпри xn+1 = " + info[21] + Environment.NewLine;
+                            textBox_info.Text += "min(hn) = " + info[22] + "\t\tпри xn+1 = " + info[23] + Environment.NewLine;
+                            break;
+                        case 3:
+                            textBox_info.Text += "Всего ум. шага = " + info[18] + Environment.NewLine;
+                            textBox_info.Text += "Всего ув. шага = " + info[19] + Environment.NewLine;
+                            break;
+                    }
 
                     //get firstLine
                     string firstLine = reader.ReadLine();
@@ -211,34 +231,58 @@ namespace LabWork
                         values = string_erase(values, "");
                         table.Rows.Add(values);
                     }
-                    reader.Close();
                 }
-                catch (Exception exc){
+                catch (Exception exc)
+                {
                     MessageBox.Show("Incorrect result.txt");
                 }
+                reader.Close();
 
                 //run graph.exe
-                if (!File.Exists(@".\Graph_for_method\graph.py")) {
-                    MessageBox.Show(@"'.\Graph_for_method\graph.py' not found");
-                    return;
+                command = "";
+                switch (func_num)
+                {
+                    case 1:
+                        command += m1 + " 1";
+                        break;
+                    case 2:
+                        command += m1 + " 0";
+                        break;
+                    case 3:
+                        command += m2 + " 0";
+                        break;
                 }
-                switch (comboBox1.SelectedIndex) {
-                    case 0: {
-                            command = @".\Graph_for_method\graph.py 3 1";
-                            break;
-                    }
-                    default: {
-                            command = @".\Graph_for_method\graph.py 3 0";
-                            break;
-                    }
-                }
-
                 process = new Process();
                 //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.StartInfo.FileName = "python";
-                process.StartInfo.Arguments = "" + command;
+                switch (type_file) {
+                    case 0:
+                        if (!File.Exists(@".\Graph_for_method\graph.py"))
+                        {
+                            MessageBox.Show(@"'.\Graph_for_method\graph.py' not found");
+                            return;
+                        }
+                        else {
+                            process.StartInfo.FileName = "python";
+                            command = @".\Graph_for_method\graph.py " + command;
+                            process.StartInfo.Arguments = "" + command;
+                        }
+                        break;
+                    case 1:
+                        if (!File.Exists(@".\Graph_for_method\graph.exe"))
+                        {
+                            MessageBox.Show(@"'.\Graph_for_method\graph.exe' not found");
+                            return;
+                        }
+                        else {
+                            process.StartInfo.FileName = "cmd.exe";
+                            command = @".\Graph_for_method\graph.exe " + command;
+                            process.StartInfo.Arguments = @"/C " + command;
+                        }
+                        break;
+                }
                 process.Start();
             }
+
         }
 
         private void Form1_Resize(object sender, EventArgs e)

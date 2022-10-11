@@ -54,6 +54,7 @@ namespace LabWork
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_du = new System.Windows.Forms.TextBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataTable_table)).BeginInit();
             this.SuspendLayout();
             // 
@@ -285,11 +286,23 @@ namespace LabWork
             this.textBox_du.TabIndex = 28;
             this.textBox_du.Text = "1";
             // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            ".py",
+            ".exe"});
+            this.comboBox3.Location = new System.Drawing.Point(904, 12);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(151, 28);
+            this.comboBox3.TabIndex = 30;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 499);
+            this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox_du);
             this.Controls.Add(this.checkBox1);
@@ -354,6 +367,7 @@ namespace LabWork
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox_du;
+        private System.Windows.Forms.ComboBox comboBox3;
     }
 }
 
