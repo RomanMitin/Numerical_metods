@@ -301,13 +301,13 @@ std::vector<step_info_t> calc_result_system(const Global_data_t& global_data, Re
 	}
 
 
-	/*ref.num_step = step_count;
+	ref.num_step = step_count;
 	ref.diff_b = b - x;
 	ref.x_end = x;
-	ref.v_end = v;
+	//ref.v_end = v;
 
 	ref.count_step_grow = count_step_grow;
-	ref.count_step_decrease = count_step_decrease;*/
+	ref.count_step_decrease = count_step_decrease;
 
 
 	return step_info_vec;

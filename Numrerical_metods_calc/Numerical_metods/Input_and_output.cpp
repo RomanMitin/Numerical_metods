@@ -222,7 +222,6 @@ void print_refernce(std::ostream& out, Reference_t& ref)
 
 void output_result(std::ostream& out, std::vector<step_info_t> res)
 {
-
 	out << std::setprecision(precision);
 
 
@@ -238,8 +237,12 @@ void output_result(std::ostream& out, std::vector<step_info_t> res)
 	out << "S*" << std::setw(space_num);
 	if (res[0].v.size() != 2)
 		out << "v_fin" << std::setw(space_num);
-	out << "u" << std::setw(space_num);
-	out << "err" << std::setw(space_num);
+
+	if (has_test_func)
+	{
+		out << "u" << std::setw(space_num);
+		out << "err" << std::setw(space_num);
+	}
 	out << "mul_s" << std::setw(space_num);
 	out << "div_s" << std::setw(space_num);
 	out << '\n';
@@ -255,8 +258,12 @@ void output_result(std::ostream& out, std::vector<step_info_t> res)
 		out << abs(res[i].S_astr) << std::setw(space_num);
 		if (res[0].v.size() != 2)
 			out << res[i].v_final << std::setw(space_num);
-		out << res[i].u << std::setw(space_num);
-		out << res[i].abs_error << std::setw(space_num);
+
+		if (has_test_func)
+		{
+			out << res[i].u << std::setw(space_num);
+			out << res[i].abs_error << std::setw(space_num);
+		}
 		out << res[i].count_step_grow << std::setw(space_num);
 		out << res[i].count_step_decrease << '\n';
 	}
