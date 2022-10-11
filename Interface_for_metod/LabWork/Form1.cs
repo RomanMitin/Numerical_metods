@@ -121,7 +121,7 @@ namespace LabWork
                         options += m1 + " ";
                         break;
                     case 3:
-                        p = 3;
+                        p = 4;
                         options += m2 + " ";
                         break;
                 }
