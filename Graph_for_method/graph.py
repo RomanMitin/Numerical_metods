@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import os.path
 from sys import exit 
-from sys import argv #Для предачи n_method, u_true, system_
+from sys import argv
 
-if (len(argv) != 3 and len(argv) != 4):
+if (len(argv) < 2 or len(argv) > 4):
     print("Incorrect launch")
     exit()
 
@@ -17,15 +17,32 @@ with open("./tmp/result.txt") as res:
 
 n_method = int(argv[1])
 
-if(argv[2] == '1' or argv[2] == 'True'): #Нужно передавать есть ли точное решение
+if(len(argv) > 2 and (argv[2] == '1' or argv[2] == 'True')):
     u_true = True
 else:
     u_true = False
 
-if(len(argv) == 4): #Нужно передавать система или нет, можно опустить тогда считается, что нет
-    system_ = argv[3]
+if(len(argv) > 3 and (argv[3] == '1' or argv[3] == 'True')):
+    system_ = True
 else:
     system_ = False
+
+if n_method == 2:
+    name = "Euler method 1 order"
+elif n_method == 3:
+    name = "Runge Kutta methods 2 order step"
+elif n_method == 7:
+    name = "Runge Kutta methods 4 order step"
+elif n_method == 8:
+    name = "Runge Kutta methods 2 order step"
+    u_true = False
+    system_ = True
+elif n_method == 9:
+    name = "Runge Kutta methods 4 order step"
+    u_true = False
+    system_ = True
+else:
+    name = "Unknown method"
 
 ##reference
 #info = []
@@ -63,20 +80,6 @@ for i, row in enumerate(result):
         u.append(float(row[7]))
         E.append(abs(float(row[8])))
     
-
-if n_method == 2:
-    name = "Euler method 1 order"
-elif n_method == 3:
-    name = "Runge Kutta methods 2 order step"
-elif n_method == 7:
-    name = "Runge Kutta methods 4 order step"
-elif n_method == 8:
-    name = "Runge Kutta methods 2 order step"
-    u_true = False
-    system_ = True
-else:
-    name = "Unknown method"
-
 
 plt.close()
 fig = plt.figure(num = name, figsize=(12, 7))
