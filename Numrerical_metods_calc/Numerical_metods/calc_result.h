@@ -192,6 +192,7 @@ std::vector<step_info_t> calc_result_system(const Global_data_t& global_data, Re
 	double control_local_error_down = global_data.control_local_error_down;
 
 	const uint64_t max_step = global_data.max_steps;
+	double e_gr = global_data.e_gr;
 
 	double x = global_data.a;
 	std::valarray<double> v = global_data.v0;
@@ -229,8 +230,10 @@ std::vector<step_info_t> calc_result_system(const Global_data_t& global_data, Re
 	{
 		step_info_t step_info;
 
-		if (x + h > b)
+		if (abs(x + h - b) > e_gr)
 			h = b - x;
+		else
+			break;
 
 		count_grow_by_step = 0;
 		count_decrease_by_step = 0;
