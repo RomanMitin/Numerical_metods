@@ -88,11 +88,11 @@ if(not system_):
     (x_v_u, x_S_E) = fig.subplots(2, 1)
     fig.suptitle(name, fontsize=16, fontweight='bold')
 
-    x_v_u.plot(x, v, c = 'blue', label = 'Численное рещение')
+    x_v_u.plot(x, v, c = 'blue', label = 'Численное решение')
     x_v_u.scatter(x, v, c = 'blue')
     x_v_u.set_xlabel('x')
     if(u_true):
-        x_v_u.plot(x, u, c = 'red', label = 'Точное рещение')
+        x_v_u.plot(x, u, c = 'red', label = 'Точное решение')
         x_v_u.scatter(x, u, c = 'red')
 
     x_S_E.plot(x, S_, c = 'orange', label = 'ОЛП')
@@ -108,12 +108,12 @@ else:
     ((x_v, x_y), (v_y, x_S)) = fig.subplots(2, 2)
     fig.suptitle(name, fontsize=16, fontweight='bold')
 
-    x_v.plot(x, v, c = 'blue', label = 'Численное рещение v1')
+    x_v.plot(x, v, c = 'blue', label = 'Численное решение v1')
     x_v.scatter(x, v, c = 'blue')
     x_v.set_xlabel('x')
     x_v.set_ylabel('v1')
 
-    x_y.plot(x, y, c = 'blue', label = 'Численное рещение v2')
+    x_y.plot(x, y, c = 'blue', label = 'Численное решение v2')
     x_y.scatter(x, y, c = 'blue')
     x_y.set_xlabel('x')
     x_y.set_ylabel('v2')
