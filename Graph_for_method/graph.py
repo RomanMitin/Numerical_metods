@@ -66,15 +66,22 @@ if(u_true):
 if(system_):
     y = []
 
+result.pop()
 for i, row in enumerate(result):
     x.append(float(row[2]))
     v.append(float(row[3]))
 
     if(not(system_)):
-        S_.append(abs(float(row[5])))
+        if(abs(float(row[5])) < 5*(10**-16)):
+            S_.append(0.0)
+        else:
+            S_.append(abs(float(row[5])))
     else:
         y.append(float(row[4]))
-        S_.append(abs(float(row[7])))
+        if(abs(float(row[7])) < 5*(10**-16)):
+            S_.append(0.0)
+        else:
+            S_.append(abs(float(row[7])))
     
     if(u_true and not(system_)):
         u.append(float(row[7]))
