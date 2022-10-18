@@ -199,6 +199,7 @@ std::vector<step_info_t> calc_result_system(const Global_data_t& global_data, Re
 
 	std::valarray<double> v_check(dim);
 
+	double e_gr = global_data.e_gr;
 	double h = global_data.start_step;
 
 	double b = global_data.b;
@@ -230,7 +231,7 @@ std::vector<step_info_t> calc_result_system(const Global_data_t& global_data, Re
 		step_info_t step_info;
 
 		if (abs(x + h - b) > e_gr)
-			break
+			break;
 
 		count_grow_by_step = 0;
 		count_decrease_by_step = 0;
